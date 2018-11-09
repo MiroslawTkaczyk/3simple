@@ -43,18 +43,18 @@
   },
   "resources": [
     {
-      "apiVersion": "2017-05-10",
-      "name": "linkedTemplate",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://armtutorials.blob.core.windows.net/linkedtemplates/linkedStorageAccount.json"
-        },
-        "parameters": {
-          "storageAccountName": { "value": "[variables('storageAccountName')]" },
-          "location": { "value": "[parameters('location')]" }
-        }
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[concat(variables('StorageAccountName'), copyIndex(1), 'stg')]",
+      "apiVersion": "2017-06-01",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('storageAccountType')]"
+      },
+      "kind": "Storage",
+      "properties": {},
+      "copy": {
+        "name": "storagecopy",
+        "count": 2
       }
     }
 
